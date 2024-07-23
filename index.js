@@ -3,8 +3,8 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 // Set up scene, camera, and renderer
-const sceneShiftX = -5;
-const sceneShiftY = 10;
+const sceneShiftX = -12;
+const sceneShiftY = 15;
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
@@ -14,7 +14,7 @@ const camera = new THREE.PerspectiveCamera(
   1000
 );
 // Update camera position
-camera.position.set(sceneShiftX * 2, 20, sceneShiftY * 2);
+camera.position.set(sceneShiftX * 1.5, 15, sceneShiftY * 1.5);
 camera.lookAt(sceneShiftX, 0, sceneShiftX);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -24,19 +24,20 @@ document.body.appendChild(renderer.domElement);
 
 // objects
 const tableScale = 3;
+const tableMoreY = 4;
 const tables = [
   {
-    position: new THREE.Vector3(0 + sceneShiftX, 0, 0 + sceneShiftY),
+    position: new THREE.Vector3(0 + sceneShiftX, 0, 4 + sceneShiftY + tableMoreY),
     rotation: new THREE.Vector3(0, 0, 0),
     scale: new THREE.Vector3(tableScale, tableScale, tableScale),
   },
   {
-    position: new THREE.Vector3(1 + sceneShiftX, 0, 1 + sceneShiftY),
+    position: new THREE.Vector3(6 + sceneShiftX, 0, 4 + sceneShiftY + tableMoreY),
     rotation: new THREE.Vector3(0, 0, 0),
     scale: new THREE.Vector3(tableScale, tableScale, tableScale),
   },
   {
-    position: new THREE.Vector3(0 + sceneShiftX, 0, 2 + sceneShiftY),
+    position: new THREE.Vector3(-2 + sceneShiftX, 0, 0 + sceneShiftY + tableMoreY),
     rotation: new THREE.Vector3(0, Math.PI / 2, 0),
     scale: new THREE.Vector3(tableScale, tableScale, tableScale),
   },
@@ -45,18 +46,18 @@ const tables = [
 const monitorScale = 0.8;
 const monitors = [
   {
-    position: new THREE.Vector3(0 + sceneShiftX, 2.1, 0 + sceneShiftY),
-    rotation: new THREE.Vector3(0, Math.PI / 2, 0),
+    position: new THREE.Vector3(0 + sceneShiftX, 2.1, 4 + sceneShiftY + tableMoreY),
+    rotation: new THREE.Vector3(0, Math.PI + Math.PI / 3, 0),
     scale: new THREE.Vector3(monitorScale, monitorScale, monitorScale),
   },
   {
-    position: new THREE.Vector3(1 + sceneShiftX, 2.1, 1 + sceneShiftY),
-    rotation: new THREE.Vector3(0, Math.PI / 2, 0),
+    position: new THREE.Vector3(6 + sceneShiftX, 2.1, 4 + sceneShiftY + tableMoreY),
+    rotation: new THREE.Vector3(0, Math.PI + Math.PI / 3, 0),
     scale: new THREE.Vector3(monitorScale, monitorScale, monitorScale),
   },
   {
-    position: new THREE.Vector3(0 + sceneShiftX, 2.1, 2 + sceneShiftY),
-    rotation: new THREE.Vector3(0, Math.PI / 2, 0),
+    position: new THREE.Vector3(-2 + sceneShiftX, 2.1, 0 + sceneShiftY + tableMoreY),
+    rotation: new THREE.Vector3(0, -Math.PI / 2, 0),
     scale: new THREE.Vector3(monitorScale, monitorScale, monitorScale),
   },
 ];
@@ -116,7 +117,7 @@ directionalLight.shadow.camera.far = 20;
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.05;
-controls.target.set(sceneShiftX, 0, sceneShiftY);
+controls.target.set(sceneShiftX+1, 0, sceneShiftY);
 
 // Function to create gradient texture
 function createGradientTexture(topColor, bottomColor) {
@@ -204,27 +205,27 @@ loader.load("desk.glb", (gltf) => {
 });
 
 //add tv
-loader.load("tv-h.glb", (gltf) => {
-  const tvModel = gltf.scene;
-  tvModel.castShadow = true;
-  tvModel.receiveShadow = true;
-  tvModel.position.copy(tvH.position);
-  tvModel.rotation.set(tvH.rotation.x, tvH.rotation.y, tvH.rotation.z);
-  tvModel.scale.copy(tvH.scale);
+// loader.load("tv-h.glb", (gltf) => {
+//   const tvModel = gltf.scene;
+//   tvModel.castShadow = true;
+//   tvModel.receiveShadow = true;
+//   tvModel.position.copy(tvH.position);
+//   tvModel.rotation.set(tvH.rotation.x, tvH.rotation.y, tvH.rotation.z);
+//   tvModel.scale.copy(tvH.scale);
 
-  tvModel.traverse((child) => {
-    if (child.isMesh) {
-      child.material.color.set(0xffffff); // white color
-      child.material.emissive = new THREE.Color(0xffffff); // white emissive color
-      child.material.emissiveIntensity = 0.6; // set emissive intensity to make it glow
-      child.material.transparent = false; // make the material not transparent
-      child.material.opacity = 1; // set the opacity to 100%
-    }
-  });
-  scene.add(tvModel);
-});
+//   tvModel.traverse((child) => {
+//     if (child.isMesh) {
+//       child.material.color.set(0xffffff); // white color
+//       child.material.emissive = new THREE.Color(0xffffff); // white emissive color
+//       child.material.emissiveIntensity = 0.6; // set emissive intensity to make it glow
+//       child.material.transparent = false; // make the material not transparent
+//       child.material.opacity = 1; // set the opacity to 100%
+//     }
+//   });
+//   scene.add(tvModel);
+// });
 
-loader.load("tv-v.glb", (gltf) => {
+loader.load("tv-v-2.glb", (gltf) => {
   const tvModel = gltf.scene;
   tvModel.castShadow = true;
   tvModel.receiveShadow = true;
@@ -396,18 +397,18 @@ window.addEventListener("resize", () => {
 // document.body.appendChild(infoBlock);
 
 // // Create an info block
-// const infoBlock2 = document.createElement('div');
-// infoBlock2.style.position = 'absolute';
-// infoBlock2.style.bottom = '40px';
-// infoBlock2.style.left = '540px';
-// infoBlock2.style.padding = '40px';
+const infoBlock2 = document.createElement('div');
+infoBlock2.style.position = 'absolute';
+infoBlock2.style.bottom = '40px';
+infoBlock2.style.left = '40px';
+infoBlock2.style.padding = '40px';
 // infoBlock2.style.backgroundColor = 'rgba(211, 211, 211, 0.7)';
-// infoBlock2.style.color = 'white';
-// infoBlock2.style.fontFamily = 'Arial, sans-serif';
-// infoBlock2.style.fontSize = '36px';
+infoBlock2.style.color = 'white';
+infoBlock2.style.fontFamily = 'Arial, sans-serif';
+infoBlock2.style.fontSize = '120px';
 // infoBlock2.style.borderRadius = '30px';
-// infoBlock2.innerHTML = 'Crowd Count 3D Scene';
-// document.body.appendChild(infoBlock2);
+infoBlock2.innerHTML = '<img src="LogoAltoTech.png" style="vertical-align: middle; margin-right: 10px; height: 120px;"> Alto Vision';
+document.body.appendChild(infoBlock2);
 
 // backdrop
 const additionalBoxGeometry = new THREE.BoxGeometry(10, 7, 0.2);
@@ -530,7 +531,7 @@ let redisData = {};
 // Function to fetch Redis data
 async function fetchRedisData() {
   try {
-    const response = await fetch("http://localhost:3000/api/redis-data");
+    const response = await fetch("http://192.168.1.107:3001/api/redis-data");
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

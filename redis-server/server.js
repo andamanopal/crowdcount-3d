@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 
 const client = redis.createClient({
-  url: "redis://10.10.10.84:6379", // Replace with your Redis server URL
+  url: "redis://192.168.1.107:6379", // Replace with your Redis server URL
   socket: {
     reconnectStrategy: function (retries) {
       if (retries > 20) {
@@ -20,7 +20,7 @@ const client = redis.createClient({
     },
   },
 });
-// http://localhost:3000/api/redis-data
+// http://localhost:3001/api/redis-data
 client.connect().catch(console.error);
 
 app.get("/api/redis-data", async (req, res) => {
@@ -46,5 +46,5 @@ app.get("/api/redis-data", async (req, res) => {
   }
 });
 
-const PORT = 3000;
+const PORT = 3001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
